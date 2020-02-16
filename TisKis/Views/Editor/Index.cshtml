@@ -1,0 +1,92 @@
+﻿@model ImgConverterModel
+
+@{
+    ViewData["Title"] = "Редактор";
+
+    List<string> BWoptions = new List<string>()
+{
+        "Ср.арифм",
+        "По максимальному",
+        "По минимальному",
+        "По красному и зеленому",
+        "По красному и синему",
+        "По синему и зеленому",
+        "По красному",
+        "По зеленому",
+        "По синему"
+    };
+}
+
+<h1>Редактор</h1>
+<div class="row">
+    <form asp-action="Convert" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group col-sm-2">
+            <div>
+                <h3>Параметры...</h3>
+                <div class="btn-group btn-group-toggle btn-group-vertical" data-toggle="buttons">
+                    @for (int i = 0; i < BWoptions.Count; i++)
+                    {
+                        if (Model.ParamAction == i)
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="radio" asp-for="ParamAction" value="@i" id="option-@i" autocomplete="off" checked>@BWoptions.ElementAt(i)
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-secondary">
+                                <input type="radio" asp-for="ParamAction" value="@i" id="option-@i" autocomplete="off">@BWoptions.ElementAt(i)
+                            </label>
+                        }
+                    }
+                </div>
+                <div>
+                    <input class="btn btn-warning" type="submit" value="Преобразовать" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-sm-5">
+            <div>
+                <h3>Входная картинка</h3>
+                @if (Model.TempUploadImage != null)
+                {
+                    <img style="width:450px; height:auto" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.TempUploadImage)" />
+                    <input type="hidden" asp-for="TempUploadImage" value="@Convert.ToBase64String(Model.TempUploadImage)" />
+                }
+                else
+                {
+                    <img style="width:450px; height:auto" src="~/ErrorImg/Uups....jpg" />
+                }
+            </div>
+        </div>
+
+        <div class="form-group col-sm-5">
+            <div>
+                <h3>Измененная картинка</h3>
+                @if (Model.TempConvertedImage != null)
+                {
+                    <img style="width:450px; height:auto" src="data:image/jpeg;base64, @Convert.ToBase64String(Model.TempConvertedImage)" />
+                    <input type="hidden" asp-for="TempConvertedImage" value="@Convert.ToBase64String(Model.TempConvertedImage)" />
+                }
+                else
+                {
+                    <img style="width:450px; height:auto" src="~/ErrorImg/Uups....jpg" />
+                }
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<div class="row justify-content-center">
+    <form asp-action="SaveImg">
+        <div>
+            @if (Model.TempConvertedImage != null)
+            {
+                <input type="hidden" asp-for="TempConvertedImage" value="@Convert.ToBase64String(Model.TempConvertedImage)" />
+                <input type="submit" class="btn btn-success btn-lg btn-block" value="Скачать" />
+            }
+        </div>
+    </form>
+</div>
+
