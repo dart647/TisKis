@@ -9,9 +9,9 @@ namespace TisKis.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        DbSet<UserHistory> UserHistories { get; set; }
-        DbSet<UploadImage> UploadImages { get; set; }
-        DbSet<ConvertedImage> ConvertedImages { get; set; }
+        public DbSet<UserHistory> UserHistories { get; set; }
+        public DbSet<UploadImage> UploadImages { get; set; }
+        public DbSet<ConvertedImage> ConvertedImages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

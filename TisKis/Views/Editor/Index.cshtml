@@ -111,6 +111,7 @@
                 if (User.Identity.IsAuthenticated)
                 {
                     <input type="hidden" asp-for="TempConvertedImage" value="@Convert.ToBase64String(Model.TempConvertedImage)" />
+                    <input type="hidden" asp-for="TempUploadImage" value="@Convert.ToBase64String(Model.TempUploadImage)" />
                     <input type="submit" class="btn btn-success btn-lg btn-block" value="Скачать" />
                 }
                 else
